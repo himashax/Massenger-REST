@@ -13,9 +13,8 @@ private Map<Long, Message> messages = Database.getMessages();
 	
 
 	public MessageService() {
-		Message m1 = new Message(1L, "Hello World", "Himasha");
-		Message m2 = new Message(2L, "Hello REST", "Lochana");
-		Message m3 = new Message(3L, "Hello Jersey", "Mandakini");
+		messages.put(1L, new Message(1, "Hello World!", "Himasha"));
+		messages.put(2L, new Message(2, "Hello Rest!", "Mandakini"));
 	}
 
 	public List<Message> getMessages(){
