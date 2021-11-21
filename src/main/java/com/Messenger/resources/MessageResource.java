@@ -28,6 +28,14 @@ public class MessageResource {
 	}
 	
 	@GET
+	@Path("/{year}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Message> getMessagesForYear(@PathParam("year") int year){
+		return msgService.getAllMessagesForYear(year);
+	}
+	
+	
+	@GET
 	@Path("/message/{messageId}")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
