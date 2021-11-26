@@ -10,6 +10,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.Messenger.database.Database;
@@ -23,17 +24,17 @@ public class MessageResource {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Message> getMessage() {
+	public List<Message> getMessage(@QueryParam("year") int year, 
+									@QueryParam("start") int start, 
+									@QueryParam("end") int size) {
+		if(year > 0) {
+			return msgService.getAllMessagesForYear(year);
+		}
+		if(start >= 0 && size >= 0) {
+			return msgService.getAllMessagesPaginated(start, size);
+		}
 		return msgService.getMessages();
 	}
-	
-	@GET
-	@Path("/{year}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Message> getMessagesForYear(@PathParam("year") int year){
-		return msgService.getAllMessagesForYear(year);
-	}
-	
 	
 	@GET
 	@Path("/message/{messageId}")
