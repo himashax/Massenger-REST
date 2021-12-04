@@ -68,4 +68,11 @@ public class MessageResource {
 		return msgService.deleteMessage(id);
 	}
 	
+	//A method that is going to look for the comment resource and returns the resource with the methods
+	//inside of it
+	@Path("/{messageId}/comments")
+	public CommentResource getCommentResourceInstance() {
+		return new CommentResource();
+	}
+	
 }

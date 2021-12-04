@@ -1,8 +1,11 @@
 package com.Messenger.model;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 public class Message {
 
@@ -10,6 +13,8 @@ public class Message {
 	private String message;
 	private Date createdDate;
 	private String author;
+	//every message has comments
+	private Map<Long, Comment> comments = new HashMap<>();
 	
 	public Message() {}
 	
@@ -50,6 +55,17 @@ public class Message {
 
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+	
+	//not display comments when getting messages
+	@XmlTransient
+	//Ignore comments when accessing messages only for xml
+	public Map<Long, Comment> getComments(){
+		return comments;
+	}
+	
+	public void setComments() {
+		this.comments = comments;
 	}
 	
 }
