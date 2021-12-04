@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -16,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 
 import com.Messenger.database.Database;
 import com.Messenger.model.Message;
+import com.Messenger.resources.bean.MessageFilterBean;
 import com.Messenger.service.MessageService;
 
 @Path("/messages")
@@ -23,16 +25,29 @@ public class MessageResource {
 
 	MessageService msgService = new MessageService();
 	
+//	@GET
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public List<Message> getMessage(@QueryParam("year") int year, 
+//									@QueryParam("start") int start, 
+//									@QueryParam("end") int size) {
+//		if(year > 0) {
+//			return msgService.getAllMessagesForYear(year);
+//		}
+//		if(start >= 0 && size >= 0) {
+//			return msgService.getAllMessagesPaginated(start, size);
+//		}
+//		return msgService.getMessages();
+//	}
+	
+	//There are so many parameters in the method. So, can use a bean parameter indicating all the parameters we need
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Message> getMessage(@QueryParam("year") int year, 
-									@QueryParam("start") int start, 
-									@QueryParam("end") int size) {
-		if(year > 0) {
-			return msgService.getAllMessagesForYear(year);
+	public List<Message> getMessage(@BeanParam MessageFilterBean filterBean) {
+		if(filterBean.getYear() > 0) {
+			return msgService.getAllMessagesForYear(filterBean.getYear());
 		}
-		if(start >= 0 && size >= 0) {
-			return msgService.getAllMessagesPaginated(start, size);
+		if(filterBean.getStart() >= 0 && filterBean.getSize() >= 0) {
+			return msgService.getAllMessagesPaginated(filterBean.getStart(), filterBean.getSize());
 		}
 		return msgService.getMessages();
 	}
