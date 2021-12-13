@@ -70,7 +70,7 @@ public class MessageResource {
 	
 	//A method that is going to look for the comment resource and returns the resource with the methods
 	//inside of it
-	@Path("/{messageId}/comments")
+	@Path("/{messageId}/`")
 	public CommentResource getCommentResourceInstance() {
 		return new CommentResource();
 	}

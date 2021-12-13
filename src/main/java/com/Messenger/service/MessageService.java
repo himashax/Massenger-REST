@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.Messenger.database.Database;
+import com.Messenger.exception.DataNotFoundException;
 import com.Messenger.model.Message;
 
 public class MessageService {
@@ -43,7 +44,12 @@ private Map<Long, Message> messages = Database.getMessages();
 	}
 	
 	public Message getMessage(Long id) {
-		return messages.get(id);
+		Message msg = messages.get(id);
+		
+		if(msg == null) {
+			throw new DataNotFoundException("Message for the "+id+" not found");
+		}
+		return msg;
 	}
 	
 	public Message addMessage(Message message) {

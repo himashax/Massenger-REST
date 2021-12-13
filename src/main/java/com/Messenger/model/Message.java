@@ -64,7 +64,7 @@ public class Message {
 		return comments;
 	}
 	
-	public void setComments() {
+	public void setComments(Map<Long, Comment> comments) {
 		this.comments = comments;
 	}
 	
