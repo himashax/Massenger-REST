@@ -13,7 +13,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriInfo;
 
 import com.Messenger.database.Database;
 import com.Messenger.model.Message;
@@ -56,9 +58,20 @@ public class MessageResource {
 	@Path("/message/{messageId}")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Message getMessage(@PathParam("messageId") long messageId) {
-		return msgService.getMessage(messageId);
-		
+	public Message getMessage(@PathParam("messageId") long messageId, @Context UriInfo uriInfo) {
+		Message message = msgService.getMessage(messageId);	
+		message.addLink(getUriForSelf(uriInfo, message), "self");
+		return message;
+	}
+
+	private String getUriForSelf(UriInfo uriInfo, Message message) {
+		//contains the complete uri
+		String uri = uriInfo.getBaseUriBuilder()
+		.path(MessageResource.class)
+		.path(Long.toString(message.getId()))
+		.build()
+		.toString();
+		return uri;
 	}
 	
 	@DELETE
